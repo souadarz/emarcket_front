@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Header from "../components/header";
 
 export default function Home() {
   const { logout } = useAuth();
@@ -41,7 +42,7 @@ export default function Home() {
   if (loading && products.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* <Header onLogout={logout} /> */}
+        <Header onLogout={logout} />
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
@@ -54,15 +55,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <Header onLogout={logout} /> */}
+      <Header onLogout={logout} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Title */}
         <div className="bg-gray-400 rounded-lg px-6 py-4 mb-8">
           <h2 className="text-2xl font-bold text-black">All Products</h2>
-          <p className="text-gray-800 text-sm mt-1">
-            Browse our collection of {products.length} items
-          </p>
         </div>
 
         {/* Error Message */}
