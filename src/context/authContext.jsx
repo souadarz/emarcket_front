@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (token) {
       api
-        .get("/api/v2/auth/profile")
+        .get("/api/v2/users/profile")
         .then((res) => setUser(res.data))
         .catch(() => localStorage.removeItem("token"))
         .finally(() => setLoading(false));
@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const res = await api.post("/api/v2/auth/login", { email, password });
     localStorage.setItem("token", res.data.token);
+     console.log("toooken ", localStorage.getItem("token"));
     setUser(res.data.user);
   };
 

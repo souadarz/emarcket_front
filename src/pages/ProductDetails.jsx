@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import { ChevronLeft, ShoppingCart, Heart, Share2 } from "lucide-react";
-import Header from "../components/header";
+import Header from "../components/layout/header";
+import Footer from "../components/layout/Footer";
 
 export default function ProductDetails() {
   const { id } = useParams(); 
   const navigate = useNavigate();
-  const { logout } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -43,13 +42,14 @@ export default function ProductDetails() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header onLogout={logout} />
+        <Header />
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Loading product...</p>
           </div>
         </div>
+        <Footer/>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function ProductDetails() {
   if (error || !product) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header onLogout={logout} />
+        <Header />
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-700">{error || "Product not found"}</p>
@@ -69,6 +69,7 @@ export default function ProductDetails() {
             </button>
           </div>
         </div>
+        <Footer/>
       </div>
     );
   }
@@ -81,7 +82,7 @@ export default function ProductDetails() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header onLogout={logout} />
+      <Header/>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
@@ -207,25 +208,11 @@ export default function ProductDetails() {
                   <Share2 className="w-5 h-5 text-gray-700" />
                 </button>
               </div>
-
-              {/* <div className="border-t pt-6 space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Category</span>
-                  <span className="font-medium text-gray-900">
-                    {product.category || "General"}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">SKU</span>
-                  <span className="font-medium text-gray-900"> */}
-                    {/* {product._id.slice(-8).toUpperCase()} */}
-                  {/* </span>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

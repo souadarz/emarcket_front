@@ -5,6 +5,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductDetails from "./pages/ProductDetails";
+import Notfound from "./pages/Notfound";
 
 function App() {
   return (
@@ -13,7 +14,16 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="*" element={<Notfound />} />
+
+          <Route
+            path="/products/:id"
+            element={
+              <ProtectedRoute>
+                <ProductDetails />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/"
             element={

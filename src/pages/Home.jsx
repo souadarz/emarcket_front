@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Header from "../components/header";
+import Header from "../components/layout/header";
+import Footer from "../components/layout/Footer";
 
 export default function Home() {
-  const { logout } = useAuth();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +18,7 @@ export default function Home() {
       const token = localStorage.getItem("token");
 
       const res = await fetch(
-        `http://localhost:3000/api/v2/products?page=${pageNumber}&limit=6`,
+        `http://localhost:3000/api/v2/products?page=${pageNumber}&limit=8`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -42,20 +41,21 @@ export default function Home() {
   if (loading && products.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header onLogout={logout} />
+        <Header/>
         <div className="flex items-center justify-center py-20">
           <div className="text-center">
             <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Loading products...</p>
           </div>
         </div>
+        <Footer/>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header onLogout={logout} />
+      <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Title */}
@@ -99,9 +99,7 @@ export default function Home() {
             {products.map((product) => (
               <div
                 key={product._id}
-                className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                onClick={() => navigate(`/products/${product._id}`)}
-              >
+                className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
                 {/* Product Image */}
                 <div className="relative bg-gray-100 h-64 overflow-hidden">
                   <img
@@ -141,8 +139,7 @@ export default function Home() {
                   </div>
 
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={() => {
                       navigate(`/products/${product._id}`);
                     }}
                     className="w-full bg-gray-900 text-white py-2.5 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
@@ -205,6 +202,7 @@ export default function Home() {
           </div>
         )}
       </main>
+      <Footer/>
     </div>
   );
 }
